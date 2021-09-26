@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th='http://www.thymeleaf.org/'>
+<head>
+    <meta charset="UTF-8">
+
+    <th:block th:replace="fragments :: head"></th:block>
+
+    <link rel="stylesheet" th:href="@{/css/results.css}">
+
+</head>
+<body>
+
+<header>
+    <nav th:replace="fragments :: navigation-user"></nav>
+</header>
+
+<div class="container d-flex align-items-center justify-content-center" style="margin-top:100px;">
+    <div class="col">
+        <div class="card bg-light text-dark">
+            <div class="card-body">
+                <p class="lead fw-normal py-3 ps-4">Make another <span class="fw-bold">Search</span></p>
+                <div th:replace="search/fragments :: search-form"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container d-flex align-items-center justify-content-center">
+    <div id="results-heading" class="card bg-light text-dark">
+
+        <div class="col-auto">
+            <h4 class="lead fw-normal py-3 ps-4">results for...
+                <span class="fw-bold" th:text="${searchQuery}"></span> in
+                <span class="fw-bold" th:text="${displayParameter}"></span>
+            </h4>
+        </div>
+
+        <div class="col-auto">
+            <h4 class="lead fw-normal py-3 ps-4">total results: <span class="fw-bold" id="totalResultsReturned"></span></h4>
+        </div>
+
+    </div>
+</div>
+
+<div id="results" class="row row-cols-2 row-cols-xs-2 row-cols-md-3 row-cols-lg-5"></div>
+
+<div id="page-numbers-container"></div>
+
+<footer th:replace="fragments :: footer-user"></footer>
+
+<script>
+    const API_KEY = '[[${googleKey}]]';
+
+    const query = '[[${query}]]';
+    const searchQuery = '[[${searchQuery}]]';
+    const searchParameter = '[[${searchParameter}]]';
+    let maxResults = '[[${maxResults}]]';
+    let currentPage = '[[${currentPage}]]';
+    let startIndex = '[[${startIndex}]]';
+</script>
+
+<script type="module" th:src="@{/script/search/results.js}" th:inline="javascript"></script>
+
+</body>
+</html>

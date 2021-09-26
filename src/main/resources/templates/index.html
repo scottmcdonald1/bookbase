@@ -1,36 +1,136 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
+<head>
+  <th:block th:replace="fragments :: head"></th:block>
+  <link rel="stylesheet" th:href="@{/styles.css}" />
+  <link rel="stylesheet" th:href="@{/css/homepage.css}" />
+  <script defer th:src="@{/js/bestsellers.js}"></script>
+</head>
+
 <body>
-    <header>
-        <nav th:replace="fragments :: navigation-guest"></nav>
-        <div class="login-card">
-            <p><strong>Already have an account? Log in:</strong></p>
-            <form>
-                <input class="form-control" type="email" placeholder="Email address"/>
-                <input class="form-control" type="password" placeholder="Password"/>
 
-                <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="submit">Log In</button>
-                </div>
+<!-- Navbar -->
+<nav th:replace="fragments :: navigation-guest"></nav>
 
-            </form>
+<!-- Header/showcase -->
+<header class="main-bg vh-100 text-light text-center text-sm-start d-flex align-items-center justify-content-center">
+  <div class="container">
+    <div class="row align-items-center gx-5">
+      <div class="col-xl-6">
+        <div class="card bg-light text-dark d-none d-xl-grid">
+          <div class="card-body">
+            <p class="lead fw-normal py-3 ps-4">Already have an account? Log in:</p>
+            <th:block th:replace="fragments :: login-form"></th:block>
+          </div>
         </div>
-        <div class="register-card">
-            <p><strong>Want to manage your own library? Sign up today:</strong></p>
-            <form>
-                <input class="form-control" type="email" placeholder="Email address"/>
-                <input class="form-control" type="password" placeholder="Password"/>
-                <input class="form-control" type="password" placeholder="Confirm password"/>
+      </div>
 
-                <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="submit">Create Account</button>
-                </div>
+      <div class="col-xl-6 header-text-box">
+        <h1 class="fw-bolder text-sm-center text-lg-end">Bookbase</h1>
+        <h3 class="fw-light text-sm-center text-lg-end">Manage Your Own Personal Library</h3>
+      </div>
+    </div>
+  </div>
+</header>
 
-            </form>
+<!-- Feature Cards -->
+<section id="features" class="bg-secondary bg-opacity-25 p-5">
+  <div class="container">
+    <div class="row opening-heading">
+      <h2 class="text-dark fw-normal text-center">Features</h2>
+    </div>
+    <div class="row g-5">
+      <div class="col-md-6 col-xxl-3 d-flex">
+        <div class="card bg-light pb-3">
+          <div class="card-body flex-fill text-center">
+            <div class="h1 mb-3">
+              <i class="bi bi-book"></i>
+            </div>
+            <h3 class="card-title mb-3">Manage Your Personal Library</h3>
+            <p class="card-text px-3">Keep an ongoing list of books you've read, are currently
+              reading, and want to read in the future.</p>
+          </div>
         </div>
-    </header>
+      </div>
+      <div class="col-md-6 col-xxl-3 d-flex">
+        <div class="card bg-light pb-3">
+          <div class="card-body flex-fill text-center">
+            <div class="h1 mb-3">
+              <i class="bi bi-bookmark"></i>
+            </div>
+            <h3 class="card-title mb-3">Create Digital Bookmarks</h3>
+            <p class="card-text px-3">Save all of your favorite quotes, passages, and ideas in
+              one convenient place.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xxl-3 d-flex">
+        <div class="card bg-light pb-3">
+          <div class="card-body flex-fill text-center">
+            <div class="h1 mb-3">
+              <i class="bi bi-search"></i>
+            </div>
+            <h3 class="card-title mb-3">Browse Millions of Titles</h3>
+            <p class="card-text px-3">Use the integrated Google Books search to find and
+              add titles to your own library.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xxl-3 d-flex">
+        <div class="card bg-light pb-3">
+          <div class="card-body flex-fill text-center">
+            <div class="h1 mb-3">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-half"></i>
+            </div>
+            <h3 class="card-title mb-3">Rate, Review, and Favorite</h3>
+            <p class="card-text px-3">Share your thoughts with other readers and optionally
+              set reminders to revisit your favorite books.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Carousel -->
+<section id="carousel" class="bg-light p-5 d-none d-lg-block">
+  <div class="container">
+    <p class="fw-normal lead text-dark pb-4">Choose from millions of books to add to your library, including
+      these bestsellers:</p>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner" id="carousel-guest"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Register -->
+<section class="bg-dark py-5">
+  <div class="container">
+    <div class="row align-items-center justify-content-between text-light">
+      <div class="col-md">
+        <img id="reader-img" th:src="@{/images/book_lover.svg}" class="img-fluid" />
+      </div>
+      <div class="col-md text-center p-4 mt-3">
+        <h2>Want to manage your own library?</h2>
+        <p class="lead my-3">Register for a free account today to get started.</p>
+        <a href="/registration" class="btn btn-primary my-3 px-4 py-2">Create account</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer th:replace="fragments :: footer-guest"></footer>
+
+<script>
+  const googleKey = '[[${googleKey}]]';
+  const nytKey = '[[${nytKey}]]';
+</script>
 
 </body>
+
 </html>

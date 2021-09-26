@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+   <th:block th:replace="fragments :: head"></th:block>
+   <link rel="stylesheet" th:href="@{/css/shelf.css}" />
+</head>
+<body>
+
+   <!--User Navbar-->
+   <header>
+      <nav th:replace="fragments :: navigation-user"></nav>
+   </header>
+
+   <!--Form to add books to database-->
+   <div style="padding-top: 65px;">
+      <div class="container py-5 my-auto">
+         <div class="px-xs-3 px-sm-4 py-5 bg-light rounded-3 shadow text-center">
+            <div class="container-fluid py-4 row ">
+               <div class="col ps-5 ps-lg-3 my-lg-5 mx-md-3 text-dark" align="left" style="min-width:20rem;">
+                  <h1 class="display-5 fw-bold">Hi! 👋</h1>
+                  <p class="fs-4 text-secondary">You can either add a book on your own or search for one below.</p>
+                  <p><strong class="fs-4"> Let's get to it!</strong></p>
+                  <div class="my-5 mx-auto" style="max-width:20rem;">
+                     <!-- Search bar -->
+                     <form method="POST" th:action="@{search/}" class="d-flex">
+                        <div class="input-group mb-3">
+                           <input class="form-control shadow" name="searchQuery" type="search"
+                                  placeholder="Title / Author / ISBN" aria-label="Search" aria-describedby="button-addon" required >
+                           <input class="form-control" name="searchParameter" type="hidden" value="all" aria-label="Search" />
+                           <button class="btn btn-secondary shadow" type="submit" value="Search"
+                                   aria-label="Search"
+                                   id="button-addon"><i class="fs-5 bi bi-search"></i></button>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+               <div class="col">
+                  <div class="card mx-auto bg-light shadow" style="min-width: 26rem; max-width: 30rem;">
+                     <div class="card-body">
+                        <form method="post" class="row align-items-center gy-2 gx-3">
+                           <div class="col-auto mt-3" style="width: 100%;">
+                              <label class="visually-hidden" th:for="title">Title</label>
+                              <div class="input-group">
+                                 <div class="input-group-text">Title</div>
+                                 <input th:field="${book.title}" type="text" class="form-control" id="title" placeholder="Dune" required>
+                              </div>
+                           </div>
+                           <div class="col-auto" style="width: 100%;">
+                              <label class="visually-hidden" th:for="author">Author</label>
+                              <div class="input-group">
+                                 <div class="input-group-text">Author</div>
+                                 <input th:field="${book.author}" type="text" class="form-control" id="author" placeholder="Frank Herbert" required>
+                              </div>
+                           </div>
+                           <div class="col-auto" style="width: 60%;">
+                              <label class="visually-hidden" th:for="isbn">ISBN</label>
+                              <div class="input-group">
+                                 <div class="input-group-text">ISBN</div>
+                                 <input th:field="${book.isbn}" type="text" class="form-control" id="isbn" placeholder="978-0441013593" required>
+                              </div>
+                           </div>
+                           <div class="col-auto" style="width: 40%;">
+                              <label class="visually-hidden" th:for="pages">Pages</label>
+                              <div class="input-group">
+                                 <div class="input-group-text">Pages</div>
+                                 <input th:field="${book.pages}" type="text" class="form-control" id="pages" placeholder="896" required>
+                              </div>
+                           </div>
+                           <div class="col-auto">
+                              <label class="visually-hidden" th:for="genre">Genre</label>
+                              <select th:field="*{book.genre}" class="form-select" id="genre" required>
+                                 <option selected value="">Genre</option>
+                                 <option value="Biography">Biography</option>
+                                 <option value="Business and Money">Business and Money</option>
+                                 <option value="Fiction and Literature">Fiction and Literature</option>
+                                 <option value="Health and Fitness">Health and Fitness</option>
+                                 <option value="History">History</option>
+                                 <option value="Memoir">Memoir</option>
+                                 <option value="Mystery, Thriller, and Suspense">Mystery, Thriller, and Suspense</option>
+                                 <option value="Non-Fiction (Other)">Non-Fiction (Other)</option>
+                                 <option value="Politics and Social Sciences">Politics and Social Sciences</option>
+                                 <option value="Religion and Spirituality">Religion and Spirituality</option>
+                                 <option value="Romance">Romance</option>
+                                 <option value="Science">Science</option>
+                                 <option value="Sci-Fi and Fantasy">Sci-Fi and Fantasy</option>
+                                 <option value="Self-Help">Self-Help</option>
+                                 <option value="Technology">Technology</option>
+                              </select>
+                           </div>
+                           <div class="col-auto" style="width: 60%;">
+                              <label class="visually-hidden" th:for="status">Status</label>
+                              <select th:field="${book.status}" class="form-select status-selector" id="status" required>
+                                 <option selected value="">Shelf</option>
+                                 <option id="completed" value="Completed">Completed</option>
+                                 <option value="Currently Reading">Currently Reading</option>
+                                 <option value="Want to Read">Want to Read</option>
+                              </select>
+                           </div>
+                           <div class="col-auto" style="width: 50%;">
+                              <label class="visually-hidden" th:for="description">Description</label>
+                              <div class="input-group">
+                                 <textarea th:field="${book.description}" type="text" class="form-control textarea" rows="7" id="description" placeholder="Dune is set in the distant future amidst a feudal interstellar society in which various noble houses control planetary fiefs."></textarea>
+                              </div>
+                           </div>
+                           <div class="col-auto" style="width: 50%;">
+                              <label class="visually-hidden" th:for="userReview">Personal Review</label>
+                              <div class="input-group">
+                                 <textarea th:field="${book.userReview}" type="text" class="form-control textarea" rows="7" id="userReview" placeholder="Far-reaching and mind-expanding, I could only read half a page or so at a time before looking off into space in awe."></textarea>
+                              </div>
+                           </div>
+<!--                           <div>-->
+                              <div class="rating mt-2" id="starRating">
+                                 <input th:field="${book.rating}" type="radio" name="rating" value="5" id="5">
+                                 <label th:for="5">☆</label> <input type="radio" name="rating" value="4" id="4">
+                                 <label th:for="4">☆</label> <input type="radio" name="rating" value="3" id="3">
+                                 <label th:for="3">☆</label> <input type="radio" name="rating" value="2" id="2">
+                                 <label th:for="2">☆</label> <input type="radio" name="rating" value="1" id="1">
+                                 <label th:for="1">☆</label> <input type="radio" name="rating" value="" checked="checked">
+                              </div>
+<!--                           </div>-->
+                           <div class="col-auto py-3 mx-auto" id="addBookButton">
+                              <button type="submit" class="btn btn-primary shadow">Add Book</button>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <footer th:replace="fragments :: footer-user"></footer>
+
+   <script type="text/javascript">
+      let rating = document.getElementById("starRating");
+      let addBookButton = document.getElementById("addBookButton");
+      let selectStatus = document.querySelector('.status-selector');
+
+      selectStatus.addEventListener('change', (event) => {
+         if(`${event.target.value}` == 'Completed') {
+            rating.style.display = 'flex';
+            addBookButton.classList.remove("py-3");
+            addBookButton.classList.add("pb-2");
+         } else {
+            rating.style.display = 'none';
+            addBookButton.classList.add("py-3");
+         }
+         console.log(`${event.target.value}`);
+      });
+   </script>
+</body>
+</html>

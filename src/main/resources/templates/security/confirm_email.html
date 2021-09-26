@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="fragments :: head"></th:block>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+<body class="main-bg">
+
+<nav th:replace="fragments :: navigation-guest"></nav>
+
+<div class="container d-flex align-items-center justify-content-center" style="height:100vh;">
+    <div class="col-xl-6">
+        <div class="card bg-light text-dark align-items-center">
+            <div class="w-50 alert alert-success mt-4 p-2 fw-bold text-center">
+                <i class="bi bi-check-circle-fill fs-4 pe-2" style="vertical-align: sub;"></i> Registration
+                complete.
+            </div>
+            <p class="w-75 lead fw-normal mb-4 text-center">Check your inbox to confirm your email address within the
+                next 15 minutes.</p>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments :: footer-guest"></footer>
+
+</body>
+</html>

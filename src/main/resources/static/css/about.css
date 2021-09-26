@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;700&family=Montserrat:wght@300;500&display=swap');
+
+body {
+    font-family: 'Montserrat', cursive;
+    font-weight: lighter;
+}
+
+#team {
+    background: url(/images/blurry-gradient-haikei.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+
+h1,h2,h3,h4,h5 {
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+}
+
+#logo {
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 300;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color:#6C63FF;
+}
+
+a:hover {
+    color:#6C63FF !important;
+}
+
+.bi-linkedin, .bi-github {
+    color:#6c63ff;
+}
+
+.bi-linkedin:hover, .bi-github:hover {
+    color:#EC7721;
+}
+
+.base {
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+}
+
+#div {
+    background: url(/images/layered-steps-haikei.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}

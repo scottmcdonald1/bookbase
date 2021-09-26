@@ -1,39 +1,57 @@
-header {
-    height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./images/library.jpg");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;700&family=Montserrat:wght@300;500&display=swap');
+
+body {
+    flex-direction: column!important;
+    min-height: 100vh!important;
+    display: flex!important;
 }
 
-.login-card {
-    background-color: #f4f4f4;
-    position: absolute;
-    width: 30%;
-    top: 50%;
-    left: 75%;
-    transform: translate(-50%, -50%);
-    padding: 30px;
-    border-radius: 5px;
+.main-bg {
+	/*background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+		url("/images/library.jpg");*/
+    background-image: url("/images/background.svg");
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
 }
 
-.register-card {
-    background-color: #f4f4f4;
-    position: absolute;
-    width: 45%;
-    top: 50%;
-    left: 25%;
-    transform: translate(-50%, -50%);
-    padding: 30px;
-    border-radius: 5px;
+@media (max-width: 767.98px) {
+    .main-bg {
+        background-image: url("/images/mobile-background.svg");
+    }
 }
 
-.login-card input,
-.register-card input {
-    margin: 7px 0;
+.form-floating label {
+    color: gray;
 }
 
-.login-card button,
-.register-card button {
-    margin-top: 20px;
+body {
+    font-family: 'Montserrat', cursive;
+    font-weight: lighter;
+    color: #182E4C;
+}
+
+h1,h2,h3,h4,h5 {
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+}
+
+.logo {
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 300;
+}
+
+.base {
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color:#6C63FF;
+}
+
+a:not(.btn):hover {
+    color:#6C63FF !important;
 }

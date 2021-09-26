@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <th:block th:replace="fragments :: head"></th:block>
+    <link rel="stylesheet" th:href="@{/css/shelf.css}" />
+</head>
+
+<body>
+
+<!-- User Navbar -->
+<header>
+    <nav th:replace="fragments :: navigation-user"></nav>
+</header>
+
+<!--       Book Grid -->
+<!--      <div class="my-auto" style="position:relative; top:80px;" >-->
+<div class="sticky-lg-top" style="padding-top:65px;">
+    <div class="container-fluid border-bottom" style="position: relative; top:-20px;">
+        <div class="container">
+            <form method="post" th:action="@{/user/shelf}" id="shelfForm" class="me-auto">
+                <!--               <div class="d-flex pt-5 navbar fixed-top bg-white border-bottom row"-->
+                <div class="row gx-3 gy-2 align-items-center navbar bg-white"
+                     style="margin-top:2rem; z-index:12;">
+                    <div class="col-md-4 col-xl-2 my-xl-4">
+                        <select class="form-select" name="status">
+                            <option selected value="">&#128218; Shelf</option>
+                            <option value="">All Books</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Currently Reading">Currently Reading</option>
+                            <option value="Want to Read">Want To Read</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-xl-2 my-xl-4">
+                        <select class="form-select" name="orderBy">
+                            <option selected value="">&#8645; Order By</option>
+                            <option value="Author">Author</option>
+                            <option value="dateAdded">Date Added (newest first)</option>
+                            <option value="dateViewed">Last Viewed</option>
+                            <option value="Title">Title</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-xl-2 my-xl-4">
+                        <select class="form-select" name="rating">
+                            <option selected value="">&#9733; Rating</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="1">⭐</option>
+                        </select>
+                    </div>
+                    <button class="col-xs-6 col-md-2 col-xl-1 btn btn-primary ms-2 my-xl-4" style="max-width: 25%;">
+                        <i class="bi bi-funnel-fill fst-normal"> Filter</i>
+                    </button>
+                    <div class="col p-2 d-flex justify-content-end">
+                        <a class="btn btn-success btn-expand text-white mx-2" th:href="@{/user/add}" role="button">
+                            <i class="bi bi-plus-lg text-light"></i><span class="expand-button d-xs-none d-md-inline-block text-light">Add Book</span>
+                        </a>
+                        <a class="btn btn-danger btn-expand ms-2" th:href="@{/user/delete}" role="button">
+                            <i class="bi bi-x-lg text-light"></i><span class="expand-button d-xs-none d-md-inline-block text-light">Remove Books</span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        <div th:replace="fragments :: bookshelf-grid"></div>
+    </div>
+
+<!-- Footer -->
+<footer th:replace="fragments :: footer-user"></footer>
+
+<script>
+    let bookContainers = document.querySelectorAll('.book-container');
+
+    bookContainers.forEach(container => {
+        let coverImage = container.lastElementChild;
+        container.addEventListener('mouseover', () => {
+            if(!container.classList.contains('open')) {
+                container.classList.add('open');
+                coverImage.style.opacity = '50%';
+            }
+        })
+        container.addEventListener('mouseout', () => {
+            if(container.classList.contains('open')) {
+                container.classList.remove('open');
+                coverImage.style.opacity = '100%';
+            }
+        })
+    })
+</script>
+
+</body>
+
+</html>

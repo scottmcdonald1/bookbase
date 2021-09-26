@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" xmlns:th='http://www.thymeleaf.org/'>
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="fragments :: head"></th:block>
+
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab&family=Oswald&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/search.css}">
+
+</head>
+<body>
+
+<header>
+    <nav th:replace="fragments :: navigation-user"></nav>
+</header>
+
+<div class="container d-flex align-items-center justify-content-center" style="margin-top:100px;">
+    <div class="col">
+        <div class="card bg-light text-dark">
+            <div class="card-body">
+                <p class="lead fw-normal py-3 ps-4"><span class="fw-bold">Search</span> for your next book:</p>
+                <div th:replace="search/fragments :: search-form"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer th:replace="fragments :: footer-user"></footer>
+
+</body>
+</html>
