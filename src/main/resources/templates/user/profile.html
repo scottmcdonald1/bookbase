@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="fragments :: head"></th:block>
+    <script defer th:src="@{/js/quotes.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/profile.css}" />
+</head>
+<body>
+
+<!-- User Navbar -->
+<nav th:replace="fragments :: navigation-user"></nav>
+
+<section class="container p-5" style="margin-top:5rem; margin-bottom:3rem;">
+    <div class="d-flex row col" style="justify-content:space-between">
+        <div class="mt-4 col col-12 col-sm-12 col-xl-6">
+            <div class="bg-light rounded-3 shadow">
+                <div class="container p-5 row">
+                    <div class="col">
+                        <h1 class="fs-2 mb-3">profile <i class="bi bi-person-circle" style="float:right; color:#6C63FF"></i></h1>
+                        <hr/>
+                        <ul class="p-0" >
+                            <li class="d-flex"><i class="bi bi-person-fill me-2"  style="color:#6c63ff"></i></i><p
+                                    th:text="${'Name: ' + firstName + ' ' + lastName}"></p></li>
+                            <li class="d-flex"><i class="bi bi-envelope-fill me-2" style="color:#6c63ff"></i><p th:text="${'Email: ' + username}"></p></li>
+                            <li class="d-flex"><i class="bi bi-lock-fill me-2" style="color:#6c63ff"></i><p>Password: <span style="color:#6C63FF"><i class="bi bi-dot"><i class="bi bi-dot"></i><i class="bi bi-dot"></i><i class="bi bi-dot"></i><i class="bi bi-dot"></i><i class="bi bi-dot"></i><i class="bi bi-dot"></i></i></span></p></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Stats -->
+        <div class="my-4 col col-12 col-sm-12 col-xl-6">
+            <div class="rounded-3 text-light shadow" style="background-color:#6C63FF;">
+                <div class="container p-5 row">
+                    <div class="col">
+                        <h1 class="fs-2 fw-bold mb-3">stats
+                            <i class="bi bi-clipboard-data" style="float:right;"></i></h1>
+                        <hr/>
+                        <ul class="p-0" >
+                            <li class="d-flex">
+                                <i class="bi bi-asterisk me-2"></i>
+                                <p th:text="${'Books in Library: ' + totalBooks}"></p>
+                            </li>
+                            <li class="d-flex">
+                                <i class="bi bi-bookmark-check-fill me-2"></i>
+                                <p th:text="${'Books Read: ' + totalBooksRead}"></p>
+                            </li>
+                            <li th:unless="${pagesRead}==null" class="d-flex">
+                                <i class="bi bi-file-earmark-text-fill me-2"></i>
+                                <p th:text="${'You have read ' + pagesRead + ' pages.'}"></p>
+                            </li>
+                            <li th:unless="${favoriteGenre}==null" class="d-flex">
+                                <i class="bi bi-stars me-2"></i>
+                                <p th:text="${favoriteGenre + ' is your favorite genre.'}"></p>
+                            </li>
+                            <li th:unless="${joinDate}==null" class="d-flex">
+                                <i class="bi bi-person-plus-fill me-2"></i>
+                                <p th:text="${'Member since ' + joinDate}"></p>
+                            </li>
+                            <li th:if="${joinDate}==null" class="d-flex">
+                                <i class="bi bi-plus-lg me-2"></i>
+                                <p>Go add some books to get started!</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quote Generator (requires quotes.js) -->
+        <div class="col mx-auto col-6-md col-lg-12" style="min-width:20rem;" >
+            <figure class="bg-light px-xs-3 px-md-5 rounded-3 shadow">
+                <blockquote class="py-5 container" id="blockquote-container"></blockquote>
+            </figure>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer th:replace="fragments :: footer-user"></footer>
+
+</body>
+</html>

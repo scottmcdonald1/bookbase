@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+   <th:block th:replace="fragments :: head"></th:block>
+   <link rel="stylesheet" th:href="@{/css/shelf.css}" />
+   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+   <body>
+
+      <!-- User Navbar -->
+      <header>
+         <nav th:replace="fragments :: navigation-user"></nav>
+      </header>
+
+      <!--View Book Card-->
+      <section>
+         <div class="container py-5">
+            <div class="card mb-4 bg-light rounded-3 shadow"  style="margin-top:7rem;">
+               <div class="container card-body py-5 row">
+                  <div class="col col-12 col-lg-6 mb-5 align-self-center" align="center">
+                     <img
+                        class="mx-auto shadow-lg"
+                        th:src="${book.thumbnail}"
+                        onerror="this.onerror = null; this.src='/images/not-found.png'"
+                        width="60%" style="max-width:15rem;"
+                        alt="cover"
+                     >
+                     <p th:field="${book.description}" name="description" class="text-secondary small"></p>
+                  </div>
+                  <div class="col col-12 col-lg-6">
+                     <h1 class="fs-2 fw-bold text-dark" th:text="${book.title}"></h1>
+                     <h4 th:text="${'by ' + book.author}"></h4>
+                     <div class="col">
+                        <ul class="list-unstyled mt-3">
+                           <li th:if="${book.description}!=null and ${book.description}!=''" class="d-flex"><i class="bi bi-blockquote-left me-2"></i><p th:text="${book.description}" class="text-secondary"></p></li>
+                           <li><strong th:text="${book.userReview}" class="text-dark fs-5"></strong></li>
+                           <div class="row my-3 mx-auto">
+                              <hr/>
+                              <div class="col my-2">
+                                 <ul>
+                                    <li th:unless="${book.genre}==null" class="d-flex"><i class="bi bi-stars me-2"></i><p th:text="${book.genre}" class="text-secondary"></p></li>
+                                    <li th:unless="${book.pages}==null" class="d-flex"><i class="bi bi-file-text-fill me-2"></i><p th:text="${book.pages + ' pages'}" class="text-secondary"></p></li>
+                                 </ul>
+                              </div>
+                              <div class="col my-2">
+                                 <ul class="list-unstyled">
+                                    <li th:unless="${book.isbn}==null" class="d-flex"><i class="bi bi-book me-2"></i><p th:text="${'ISBN: ' + book.isbn}" class="text-secondary"></p></li>
+                                    <li class="d-flex"><i class="bi bi-bookshelf me-2"></i><p th:text="${book.status}" class="text-secondary"></p></li>
+                                    <li class="d-flex">
+                                       <div th:if="${book.status} == 'Want to Read'" class="btn-group">
+                                          <button type="button" class="btn btn-sm btn-secondary dropdown-toggle fs-6" data-bs-toggle="dropdown" aria-expanded="false">
+                                             <i class="bi bi-cart4 me-2"></i> Buy
+                                          </button>
+                                          <ul class="dropdown-menu">
+                                             <li class="fs-6"><a th:href="${'https://www.amazon.com/s?k=' + book.title}" target="_blank" class="dropdown-item" value="Amazon">Amazon</a></li>
+                                             <li class="fs-6"><a th:href="${'https://www.audible.com/search?keywords=' + book.title}" target="_blank" class="dropdown-item" value="Audible">Audible</a></li>
+                                             <li class="fs-6"><a th:href="${'https://www.barnesandnoble.com/s/' + book.title}" target="_blank" class="dropdown-item" value="B&N">Barnes & Noble</a></li>
+                                             <li class="fs-6"><a th:href="${'https://www.abebooks.com/servlet/SearchResults?tn=' + book.title}" target="_blank" class="dropdown-item" value="AbeBooks">AbeBooks</a></li>
+                                             <li class="fs-6"><a th:href="${'https://www.bookdepository.com/search?searchTerm=' + book.title + '%20' + book.author}" target="_blank" class="dropdown-item" value="Book Depository">Book Depository</a></li>
+                                             <li><hr/></li>
+                                             <li class="fs-6"><a th:href="${'https://www.worldcat.org/title/' + book.title}" target="_blank" class="dropdown-item" value="Book Depository">Find a Library</a></li>
+                                          </ul>
+                                       </div>
+                                    </li>
+                                 </ul>
+                              </div>
+                              <div th:if="${book.status} == 'Completed'" class="rating noHover my-2" style="cursor:none !important;">
+                                 <input th:field="${book.rating}" type="radio" name="rating" value="5" id="5" disabled>
+                                 <label th:for="5">☆</label>
+                                 <input th:field="${book.rating}" type="radio" name="rating" value="4" id="4" disabled>
+                                 <label th:for="4">☆</label>
+                                 <input th:field="${book.rating}" type="radio" name="rating" value="3" id="3" disabled>
+                                 <label th:for="3">☆</label>
+                                 <input th:field="${book.rating}" type="radio" name="rating" value="2" id="2" disabled>
+                                 <label th:for="2">☆</label>
+                                 <input th:field="${book.rating}" type="radio" name="rating" value="1" id="1" disabled>
+                                 <label th:for="1">☆</label>
+                              </div>
+                           </div>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <div class="d-flex card-footer justify-content-between align-items-center">
+                  <small class="text-muted" th:text="${'Date Added: ' + book.dateAdded}"></small>
+                  <button class="iconbutton">
+                     <a th:href="@{|/user/edit/${bookId}|}">
+                        <i class="bi bi-pencil-square" style="font-size: 2rem;"></i>
+                     </a>
+                  </button>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!--Footer-->
+      <footer th:replace="fragments :: footer-user"></footer>
+   </body>
+</html>

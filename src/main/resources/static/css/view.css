@@ -1,0 +1,138 @@
+/* Imported Fonts Reference
+font-family: 'Comfortaa', cursive;
+font-family: 'Montserrat', sans-serif;
+*/
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+} h1 {
+    font-family: 'Comfortaa', cursive;
+} h4 {
+    font-family: 'Comfortaa', cursive;
+} p {
+    font-family: 'Montserrat', sans-serif;
+} li {
+    font-family: 'Montserrat', sans-serif;
+} form:not(:button) > * {
+    font-family: 'Montserrat', sans-serif;
+} .input-group-text {
+    width: 82px;
+} button {
+    font-family: 'Comfortaa', cursive;
+}
+
+.rating-count {
+    font-size: x-small;
+}
+
+#cover-image {
+    max-height: 250px;
+}
+
+#book-description {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+#add-button {
+    cursor: pointer;
+}
+
+#add-book-form-container {
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    width: 100%;
+    height: calc(100% - 80px);
+    background-color: rgba(20, 20, 20, .8);
+    display: none;
+} #add-book-form-container.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} #add-book-form {
+    width: 80%;
+}
+.tag {
+    margin: 0 5px;
+}
+
+
+/* DID NOT WRITE WANT TO GO BACK AND LOOK AT IT https://dev.to/madsstoumann/star-rating-using-a-single-input-i0l */
+.rating {
+  --dir: right;
+  --fill: gold;
+  --fillbg: rgba(100, 100, 100, 0.15);
+  --star: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.25l-6.188 3.75 1.641-7.031-5.438-4.734 7.172-0.609 2.813-6.609 2.813 6.609 7.172 0.609-5.438 4.734 1.641 7.031z"/></svg>');
+  --stars: 5;
+  --starsize: 2rem;
+  --symbol: var(--star);
+  --value: 1;
+  --w: calc(var(--stars) * var(--starsize));
+  --x: calc(100% * (var(--value) / var(--stars)));
+  block-size: var(--starsize);
+  inline-size: var(--w);
+  position: relative;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important;
+}
+[dir="rtl"] .rating {
+  --dir: left;
+}
+
+.rating::-moz-range-track {
+  background: linear-gradient(to var(--dir), var(--fill) 0 var(--x), var(--fillbg) 0 var(--x));
+  block-size: 100%;
+  mask: repeat left center/var(--starsize) var(--symbol);
+}
+.rating::-webkit-slider-runnable-track {
+  background: linear-gradient(to var(--dir), var(--fill) 0 var(--x), var(--fillbg) 0 var(--x));
+  block-size: 100%;
+  mask: repeat left center/var(--starsize) var(--symbol);
+  -webkit-mask: repeat left center/var(--starsize) var(--symbol);
+}
+.rating::-moz-range-thumb {
+  height: var(--starsize);
+  opacity: 0;
+  width: var(--starsize);
+}
+.rating::-webkit-slider-thumb {
+  height: var(--starsize);
+  opacity: 0;
+  width: var(--starsize);
+  -webkit-appearance: none;
+}
+
+.rating, .rating-label {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+}
+.rating-label {
+  margin-block-end: 1rem;
+}
+
+.rating--nojs::-moz-range-track {
+  background: var(--fillbg);
+}
+.rating--nojs::-moz-range-progress {
+  background: var(--fill);
+  block-size: 100%;
+  mask: repeat left center/var(--starsize) var(--star);
+}
+.rating--nojs::-webkit-slider-runnable-track {
+  background: var(--fillbg);
+}
+.rating--nojs::-webkit-slider-thumb {
+  background-color: var(--fill);
+  box-shadow: calc(0rem - var(--w)) 0 0 var(--w) var(--fill);
+  opacity: 1;
+  width: 1px;
+}
+[dir="rtl"] .rating--nojs::-webkit-slider-thumb {
+  box-shadow: var(--w) 0 0 var(--w) var(--fill);
+}

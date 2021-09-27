@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="fragments :: head"></th:block>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+    <link rel="stylesheet" th:href="@{/css/homepage.css}" />
+    <script defer th:src="@{/js/bestsellers.js}"></script>
+    <script defer th:src="@{/js/bestsellersByGenre.js}"></script>
+    <script defer th:src="@{/js/quotes.js}"></script>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav th:replace="fragments :: navigation-user"></nav>
+
+<!-- Header/showcase -->
+<header class="main-bg min-vh-100 pb-5 d-flex align-items-center justify-content-center" style="padding-top:120px;">
+    <div class="container">
+        <div class="row g-5" th:classappend="${#strings.isEmpty(genre) ? 'align-items-center' : ''}">
+            <div class="col-xl-6">
+                <div class="card bg-light text-dark h-100">
+                    <div class="card-body">
+                        <p class="lead fw-normal pt-3 ps-4" th:text="${'Welcome back, ' + name + '!'}"></p>
+                        <div th:each="list : ${recentBooks}" th:if="${!list.isEmpty()}">
+                            <p class="lead ps-4 pb-2">Pick up where you left off:</p>
+                            <div class="row row-cols-2 my-2">
+                                <div class="cols-3 d-flex"
+                                     th:each="book,iterStat : ${list}"
+                                     th:classappend="${list.size() == 1 ? 'mx-auto' : ''}">
+                                    <div th:if="${iterStat.index < 4 && iterStat.index != null}"
+                                         class="card bg-transparent flex-lg-row mx-auto mb-5">
+                                        <a th:href="@{|/user/view/${book.id}|}">
+                                            <img
+                                                 th:src="@{${'https://www.syndetics.com/index.aspx?isbn='+book.isbn+'/LC.JPG'}}"
+                                                 onmouseover="this.style.opacity='50%'" onmouseout="this.style.opacity='100%'"
+                                                 class="mx-auto bookcover shadow-lg" z-index="1" margin-top="-2"
+                                                 width="135" height="200" alt="cover"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:if="${recentBooks[0].size() <= 2}" class="px-4 pb-3">
+                            <p class="lead pb-2">Food for Thought</p>
+                            <div class="mx-auto" >
+                                <figure class="bg-light rounded-3 shadow">
+                                    <blockquote class="py-3 container" id="blockquote-container"></blockquote>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card text-dark bg-light"
+                     th:classappend="${!#strings.isEmpty(genre) ? 'h-100' : ''}">
+                    <div class="card-body">
+                        <p class="lead fw-normal pt-3 ps-4">
+                            <a href="https://developer.nytimes.com/">
+                                <img th:src="@{/images/poweredby_nytimes_30a.png}" alt="NYT API"/>
+                            </a>Browse current bestsellers by genre:
+                        </p>
+                        <label class="visually-hidden" th:for="genre">Genre</label>
+                        <form action="POST" th:action="@{/home}" class="px-5 pb-3">
+                            <div class="input-group">
+                                <select class="form-select" name="genre" id="genre" required>
+                                    <option selected value="">Genre</option>
+                                    <option value="advice-how-to-and-miscellaneous">Advice, How-To & Miscellaneous</option>
+                                    <option value="business-books">Business</option>
+                                    <option value="childrens-middle-grade-hardcover">Children's Middle Grade</option>
+                                    <option value="picture-books">Children’s Picture Books</option>
+                                    <option value="series-books">Children’s Series</option>
+                                    <option value="combined-print-and-e-book-fiction">Fiction</option>
+                                    <option value="graphic-books-and-manga">Graphic Books and Manga</option>
+                                    <option value="mass-market-monthly">Mass Market</option>
+                                    <option value="combined-print-and-e-book-nonfiction">Nonfiction</option>
+                                    <option value="young-adult-hardcover">Young Adult</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">View Bestsellers</button>
+                            </div>
+                        </form>
+                        <div class="bestsellers-list scroll ps-2 pe-3" th:if="${genre}" th:id="${genre}"></div>
+                        <div class="d-flex justify-content-center align-items-center" th:if="${genre == null}">
+                            <p class="text-secondary" style="margin: 6rem 0;">
+                                <i class="bi bi-chevron-double-right"></i>
+                                Data provided by The New York Times
+                                <i class="bi bi-chevron-double-left"></i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Carousel -->
+<section id="carousel" class="bg-light p-5 d-none d-lg-block">
+    <div class="container">
+
+        <p class="fw-normal lead text-dark pb-4">
+            <a href="https://developer.nytimes.com/">
+                <img th:src="@{/images/poweredby_nytimes_30a.png}" alt="NYT API"/>
+            </a>Looking for something new to read? Browse these
+            bestsellers:
+        </p>
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner" id="carousel-user"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<section>
+    <footer th:replace="fragments :: footer-user"></footer>
+</section>
+
+<script>
+  const googleKey = '[[${googleKey}]]';
+  const nytKey = '[[${nytKey}]]';
+</script>
+
+</body>
+
+</html>

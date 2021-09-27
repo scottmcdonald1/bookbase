@@ -1,29 +1,305 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:fragment="head">
-  <meta charset="UTF-8" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-  <link rel="stylesheet" th:href="@{/styles.css}" />
-  <title>Library App</title>
-</head>
+  <th:block th:fragment="head">
+      <meta charset="UTF-8" />
+      <link rel="icon" th:href="@{/images/favicon.png}" type="image/x-icon"/>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+      <link rel="stylesheet" th:href="@{/styles.css}" />
+      <title th:text="${title != null} ? ${title} : 'Bookbase'">Bookbase</title>
+  </th:block>
+
 <body>
 
-<!-- Navbar -->
-<nav th:fragment="navigation-guest" class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-  <div class="container">
-    <a class="navbar-brand me-2" href="#">Library App</a>
-      <div class="d-flex">
-        <ul class="navbar-nav px-3 me-2">
-          <li class="nav-item">
-            <a href="#" class="nav-link" style="color: #0d6efd">Register</a>
-          </li>
-        </ul>
-        <button type="button" class="btn btn-primary">Log In</button>
-      </div>
+<!-- Navbar (guest) -->
+<nav th:fragment="navigation-guest" class="logo navbar navbar-expand-md bg-light navbar-light fixed-top">
+  <div class="container-fluid px-5">
+    <a title="Home" class="logo navbar-brand me-2 fs-3" style="color:#182E4C;"
+       href="/">
+      <img th:src="@{/images/bookbase_logo.svg}" class="img-fluid me-2" style="max-height:40px" />
+      BOOK<span class="base">BASE</span>
+    </a>
+
+    <!-- Hamburger menu toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu" aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navmenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item text-end">
+          <a href="/login" class="btn btn-outline-primary px-md-4 py-2 my-2">Log In</a>
+        </li>
+        <li class="nav-item ps-md-3 text-end">
+          <a href="/registration" class="btn btn-primary text-light px-md-4 py-2 my-2">Create account</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
 
+<!-- Login form -->
+<th:block th:fragment="login-form" class="card-body">
+  <form th:action="@{/login}" method="post" class="px-4">
+    <div th:if="${param.error}" class="alert alert-danger p-2 mb-4 mx-4 fw-bold text-center">
+      <i class="bi bi-exclamation-circle-fill fs-4 pe-2" style="vertical-align: sub;"></i> Invalid
+      email address or password.
+    </div>
+    <div th:if="${param.logout}" class="alert alert-success p-2 mb-4 mx-4 fw-bold text-center">
+      <i class="bi bi-check-circle-fill fs-4 pe-2" style="vertical-align: sub;"></i> You have
+      been logged out.
+    </div>
+    <div class="form-floating mb-3">
+      <input name="email" type="email" id="email" class="form-control" placeholder="Email Address" autofocus/>
+      <label for="email">Email Address</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input name="password" type="password" id="password" class="form-control"
+             placeholder="Password">
+      <label for="password">Password</label>
+    </div>
+<!--    <div class="text-end pe-2">-->
+<!--      <input type="checkbox" id="checkbox" name="remember-me">-->
+<!--      <label for="checkbox">Remember me</label>-->
+<!--    </div>-->
+    <div>
+<!--      <a class="my-3 float-start" href="#" style="text-decoration:none;">Forgot-->
+<!--        password?</a>-->
+      <button type="submit" class="btn btn-primary w-25 my-3 float-end">Log In</button>
+    </div>
+  </form>
+</th:block>
+
+    <!-- Navbar(logged-in user pages) -->
+    <nav
+      th:fragment="navigation-user" class="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-lg" style="margin-bottom:125px">
+      <div class="container-fluid px-5">
+        <a title="Home" class="logo navbar-brand me-2 fs-3" style="color:#182E4C;" id="logo"
+           th:href="@{|/|}">
+          <img th:src="@{/images/bookbase_logo.svg}" class="img-fluid me-2" style="max-height:40px" />
+          BOOK<span class="base">BASE</span>
+        </a>
+        <button class="navbar-toggler shadow-sm my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse ms-auto" id="navbarText">
+          <ul class="navbar-nav ms-auto align-items-end">
+
+            <!--nav search bar-->
+
+            <li class="nav-item mx-1 nav-search">
+              <form method="POST" th:action="@{/user/search/}" class="nav-link my-1">
+                <div class="input-group">
+                  <input class="form-control shadow-sm" name="searchQuery" type="search"
+                         placeholder="Title / Author / ISBN" aria-label="Search" aria-describedby="button-addon" required >
+                  <input class="form-control" name="searchParameter" type="hidden" value="all" aria-label="Search" />
+                  <button class="btn btn-secondary shadow-sm" type="submit" value="Search"
+                          aria-label="Search"
+                          id="button-addon"><i class="bi bi-search"></i></button>
+                </div>
+              </form>
+            </li>
+
+            <!--home nav button-->
+
+            <li class="nav-item-btn mx-2">
+              <a title="Home" th:href="@{|/|}" class="nav-link " style="color: #182E4C;">
+                <i class="bi bi-house" style="font-size:2rem"></i>
+              </a>
+            </li>
+
+            <!--bookshelf nav button-->
+
+           <li class="nav-item-btn mx-2">
+              <a title="My shelves" th:href="@{|/user/shelf|}" class="nav-link " style="color: #182E4C;">
+                <i class="bi bi-grid-3x3-gap-fill" style="font-size:2rem"></i>
+              </a>
+            </li>
+
+            <!--search nav button-->
+
+<!--            <li class="nav-item-btn mx-2">-->
+<!--              <a title="Search" th:href="@{|/user/search|}" class="nav-link " style="color: #182E4C;">-->
+<!--                <i class="bi bi-search" style="font-size:2rem"></i>-->
+<!--              </a>-->
+<!--            </li>-->
+
+            <!-- user profile nav button-->
+
+            <li class="nav-item-btn mx-2">
+              <a title="My profile" th:href="@{|/user/profile|}" class="nav-link" aria-current="page" style="color:
+              #182E4C;">
+                <i class="bi bi-person-circle" style="font-size:2rem"></i>
+              </a>
+            </li>
+
+            <!-- about us nav button-->
+
+            <li class="nav-item-btn mx-2">
+              <a title="About" th:href="@{|/about|}" class="nav-link" aria-current="page" style="color: #182E4C;">
+                <i class="bi bi-info-circle-fill" style="font-size:2rem"></i>
+              </a>
+            </li>
+
+            <!-- logout nav button-->
+            <li class="nav-item-btn me-1 ms-2" >
+              <a title="Log out" th:href="@{/logout}" class="nav-link" aria-current="page" style="color:
+              #182E4C;">
+                <i class="bi bi-box-arrow-right" style="font-size:2rem;"></i>
+                <form name="logoutForm" th:action="@{/logout}" action="post" th:hidden="true">
+                  <input hidden type="submit" value="Sign Out"/>
+                </form>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+<!--bookshelf grid-->
+<div th:each="list : ${bookLists}" th:fragment="bookshelf-grid"
+     th:if="${bookLists != null and !bookLists.isEmpty()}">
+  <div th:if="${!list.isEmpty()}">
+    <h2 class="pt-4" th:text="${list[0].status}"></h2>
+    <div>
+      <div class="row row-cols-2 row-cols-xs-2 row-cols-md-3 row-cols-lg-5 my-5">
+        <div class="cols-3 mx-auto justify-content-center d-flex" th:each="book : ${list}">
+          <div class="card bg-transparent flex-lg-row mx-auto mb-5">
+            <a th:if="${#httpServletRequest.requestURI == '/user/shelf'}" th:href="@{|/user/view/${book.id}|}">
+            <div class="book-container">
+              <div class="book-info">
+                <p class="title" th:text="${book.title}"></p>
+                <p>by</p>
+                <p class="author" th:text="${book.author}"></p>
+              </div>
+
+              <img
+                th:src="${book.thumbnail}"
+                onerror="this.onerror = null; this.src='/images/not-found.png'"
+                class="mx-auto bookcover shadow-lg" z-index="1" margin-top="-2" width="135" height="200" alt="cover"
+              />
+
+            </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+</div>
+
+<!--form to manually add books to database-->
+<div th:fragment="add-book" class="card mx-auto bg-dark card-shadow" style="width: 26rem; height: 22rem; margin-top:15rem;">
+  <div class="card-body">
+    <form method="post" class="row gy-2 gx-3 align-items-center">
+      <div class="col-auto mt-3" style="width: 100%;">
+        <label class="visually-hidden" th:for="title">Title</label>
+        <div class="input-group">
+          <div class="input-group-text">Title</div>
+          <input th:field="${book.title}" type="text" class="form-control" id="title" placeholder="Dune" required>
+        </div>
+      </div>
+      <div class="col-auto" style="width: 100%;">
+        <label class="visually-hidden" th:for="author">Author</label>
+        <div class="input-group">
+          <div class="input-group-text">Author</div>
+          <input th:field="${book.author}" type="text" class="form-control" id="author" placeholder="Frank Herbert" required>
+        </div>
+      </div>
+      <div class="col-auto" style="width: 60%;">
+        <label class="visually-hidden" th:for="isbn">ISBN</label>
+        <div class="input-group">
+          <div class="input-group-text">ISBN</div>
+          <input th:field="${book.isbn}" type="text" class="form-control" id="isbn" placeholder="978-0441013593" required>
+        </div>
+      </div>
+      <div class="col-auto" style="width: 40%;">
+        <label class="visually-hidden" th:for="pages">Pages</label>
+        <div class="input-group">
+          <div class="input-group-text">Pages</div>
+          <input th:field="${book.pages}" type="text" class="form-control" id="pages" placeholder="896" required>
+        </div>
+      </div>
+      <div class="col-auto">
+        <label class="visually-hidden" th:for="genre">Genre</label>
+        <select th:field="*{book.genre}" class="form-select" id="genre" required>
+          <option selected value="">Genre</option>
+          <option value="Biography">Biography</option>
+          <option value="Business and Money">Business and Money</option>
+          <option value="Fiction and Literature">Fiction and Literature</option>
+          <option value="Health and Fitness">Health and Fitness</option>
+          <option value="History">History</option>
+          <option value="Memoir">Memoir</option>
+          <option value="Mystery, Thriller, and Suspense">Mystery, Thriller, and Suspense</option>
+          <option value="Non-Fiction (Other)">Non-Fiction (Other)</option>
+          <option value="Politics and Social Sciences">Politics and Social Sciences</option>
+          <option value="Religion and Spirituality">Religion and Spirituality</option>
+          <option value="Romance">Romance</option>
+          <option value="Science">Science</option>
+          <option value="Sci-Fi and Fantasy">Sci-Fi and Fantasy</option>
+          <option value="Self-Help">Self-Help</option>
+          <option value="Technology">Technology</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <label class="visually-hidden" th:for="status">Status</label>
+        <select th:field="${book.status}" class="form-select status-selector" id="status" required>
+          <option selected value="">Shelf</option>
+          <option id="completed" value="Completed">Completed</option>
+          <option value="Currently Reading">Currently Reading</option>
+          <option value="Want to Read">Want to Read</option>
+        </select>
+      </div>
+      <div>
+        <div class="rating mt-2 mb-1" id="starRating"> <input th:field="${book.rating}" type="radio" name="rating" value="5" id="5"><label th:for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label th:for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label th:for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label th:for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label th:for="1">☆</label><input type="radio" name="rating" value="" checked="checked"></div>
+      </div>
+      <div class="col-auto mx-auto">
+        <button type="submit" class="btn btn-primary btn-lg card-shadow">Add Book</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Footer (guest) -->
+<footer th:fragment="footer-guest"
+        class="footer bg-light d-flex flex-wrap justify-content-between align-items-center py-3 mt-auto px-5 border-top">
+  <p class="col-md-4 mb-0 text-muted">&copy; 2021, All Rights Reserved</p>
+
+  <div class="h1 col-md-4 d-flex align-items-center justify-content-center my-auto">
+    <a class="link-dark text-decoration-none" href="/">
+      <img th:src="@{/images/bookbase_logo.svg}" class="img-fluid" style="max-height:40px" />
+    </a>
+  </div>
+
+  <ul class="nav col-md-4 justify-content-end">
+    <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
+    <li class="nav-item"><a th:href="@{|/about|}" class="nav-link px-2 text-muted">About</a>
+  </ul>
+</footer>
+
+<!-- Footer -->
+<footer th:fragment="footer-user"
+        class="footer bg-light d-flex flex-wrap justify-content-between align-items-center py-3 mt-auto px-5 border-top">
+  <p class="col-md-4 mb-0 text-muted">&copy; 2021, All Rights Reserved</p>
+
+  <div class="h1 col-md-4 d-flex align-items-center justify-content-center my-auto">
+    <a class="link-dark text-decoration-none" href="/">
+      <img th:src="@{/images/bookbase_logo.svg}" class="img-fluid" style="max-height:40px" />
+    </a>
+  </div>
+
+  <ul class="nav col-md-4 justify-content-end">
+    <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
+    <li class="nav-item"><a th:href="@{|/user/shelf|}" class="nav-link px-2 text-muted">Shelves</a></li>
+    <li class="nav-item"><a th:href="@{|/user/search|}" class="nav-link px-2 text-muted">Find a Book</a></li>
+    <li class="nav-item"><a th:href="@{|/user/profile|}" class="nav-link px-2 text-muted">Profile</a></li>
+    <li class="nav-item"><a th:href="@{|/about|}" class="nav-link px-2 text-muted">About</a>
+  </ul>
+</footer>
+
 </body>
+
 </html>

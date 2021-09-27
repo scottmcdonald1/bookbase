@@ -1,0 +1,149 @@
+
+<!doctype html>
+<html lang="en" xmlns:th='http://www.thymeleaf.org/'>
+<head>
+    <meta charset="UTF-8">
+
+    <th:block th:replace="fragments :: head"></th:block>
+
+    <link rel="stylesheet" th:href="@{/css/view.css}">
+
+    <script type="text/javascript" src="//books.google.com/books/previewlib.js"></script>
+
+</head>
+<body>
+
+<header>
+    <nav th:replace="fragments :: navigation-user"></nav>
+</header>
+
+<section>
+
+    <div class="container py-5 mt-5">
+
+<!--        <input id="back-button" class="btn btn-secondary" value="back to search" action="action" type="button" onclick="history.go(-1);" style="margin-bottom: 20px;" />-->
+
+        <div class="card mb-4 bg-light rounded-3 shadow">
+            <div id="book-container" class="container card-body pt-5 row">
+                <div id="cover-and-rating" class="col col-12 col-lg-3 mb-5" align="center" style="justify-content:center"></div>
+                <div id="book-details" class="col col-12 col-lg-6 mb-5"></div>
+                <div id="buttons" class="col col-12 col-lg-3 mb-5" align="center" style="justify-content:center">
+                    <div>
+                        <span id="add-button"></span>
+                    </div>
+
+                    <div id="previewButton" class="mb-5">
+                        <script>
+                            let previewId = '[[${bookId}]]';
+                            GBS_insertPreviewButtonPopup(previewId);
+                        </script>
+                        <span id="__GBS_Button0" style="cursor:pointer;"></span>
+                    </div>
+
+                </div>
+            </div>
+            <div id="book-description" class="container pb-5 px-5"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+
+    <div id="add-book-form-container" class="py-5 mt-5">
+
+        <form id="add-book-form" method="post">
+            <div class="card bg-light rounded-3 shadow">
+                <div class="container card-body py-5 row form-group">
+
+                    <div class="col col-12 col-lg-3 mb-5 align-self-center" align="center" style="justify-content:center;align-items:center;">
+                        <div id="form-thumbnail"></div>
+                    </div>
+
+                    <div class="col col-12 col-lg-5 mb-5" align="center" style="justify-content:center">
+
+                        <div class="input-group">
+                            <label class="input-group-text my-1" for="title">Title</label>
+                            <input type="text" th:field="${book.title}" name="title" id="title"
+                                   class="form-control shadow-sm my-1" placeholder="Title"/>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text my-1" for="isbn">ISBN</label>
+                            <input type="text" th:field="${book.isbn}" id="isbn" class="form-control shadow-sm my-1" placeholder="ISBN"/>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text my-1" for="genre">Genre</label>
+                            <input type="text" th:field="${book.genre}" id="genre" class="form-control shadow-sm my-1" placeholder="Genre"/>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text my-1" for="title">Author</label>
+                            <input type="text" th:field="${book.author}" id="author" class="form-control shadow-sm my-1" placeholder="Author"/>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text my-1" for="pages">Pages</label>
+                            <input type="text" th:field="${book.pages}" id="pages" class="form-control shadow-sm my-1" placeholder="Pages"/>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text my-1" for="status">Status</label>
+                            <select th:field="${book.status}" id="status" class="form-select shadow-sm my-1">
+                                <option selected value="Want to Read">Want to Read</option>
+                                <option value="Currently Reading">Currently Reading</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text my-1" for="rating">Rating</label>
+                            <select th:field="${book.rating}" id="rating" class="form-select shadow-sm my-1">
+                                <option selected value="">Select One</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="col col-12 col-lg-4 mb-5">
+                        <label class="form-label" for="description">Description</label>
+                        <textarea type="text" id="description" class="form-control m-1 textarea text-secondary" rows="11" th:field="${book.description}" placeholder="Add a description..."></textarea>
+                    </div>
+
+                    <div class="col" align="center" style="justify-content:center">
+                        <button class="btn btn-success" type="submit">add book</button>
+                    </div>
+
+                </div>
+
+                <label>
+                    <input th:field="${book.thumbnail}" id="thumbnail" hidden>
+                </label>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+<footer th:replace="fragments :: footer-user"></footer>
+
+<script>
+    const API_KEY = '[[${googleKey}]]';
+
+    const bookId = '[[${bookId}]]';
+    let bookIsbns = '[[${bookRepositoryIsbns}]]';
+    let bookIds = '[[${bookRepositoryIds}]]';
+</script>
+
+<script type="module" th:src="@{/script/search/view.js}" th:inline="javascript"></script>
+
+</body>
+</html>

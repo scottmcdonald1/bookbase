@@ -1,29 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;700&family=Montserrat:wght@300;500&display=swap');
 
 body {
-    flex-direction: column!important;
-    min-height: 100vh!important;
-    display: flex!important;
+    background: url(/images/low-poly-grid-haikei.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: 'Montserrat', cursive;
     font-weight: lighter;
     color: #182E4C;
-}
-
-.main-bg {
-    background-image: url("/images/background.svg");
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
-}
-
-@media (max-width: 767.98px) {
-    .main-bg {
-        background-image: url("/images/mobile-background.svg");
-    }
-}
-
-.form-floating label {
-    color: gray;
 }
 
 h1,h2,h3,h4,h5 {
@@ -31,7 +14,7 @@ h1,h2,h3,h4,h5 {
     font-weight: 700;
 }
 
-.logo, #logo {
+#logo {
     font-family: 'Comfortaa', sans-serif;
     font-weight: 300;
 }
@@ -47,6 +30,6 @@ a {
     color:#6C63FF;
 }
 
-a:not(.btn, .currently-reading):hover {
+a:hover {
     color:#6C63FF !important;
 }

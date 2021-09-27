@@ -55,12 +55,12 @@ public class RegistrationService {
                 )
         );
 
-        String link = "http://localhost:8080/registration/confirm?token=" + token;
+        String link = "https://bookbase-app.herokuapp.com/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));
 
-        return token;
+        return "redirect:/registration/confirm_email";
     }
 
     @Transactional
@@ -84,7 +84,7 @@ public class RegistrationService {
 
         myUserDetailsService.enableUser(
                 confirmationToken.getUser().getEmail());
-        return "confirmed";
+        return "security/login";
     }
 
     private String buildEmail(String name, String link) {

@@ -4,12 +4,23 @@ plugins {
 	id 'java'
 }
 
+apply plugin: 'java'
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'com.liftoff.libraryapp.LibraryApp'
+	}
+}
+
 group = 'com.liftoff'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '16'
 
 repositories {
 	mavenCentral()
+}
+
+configurations {
+	developmentOnly
 }
 
 dependencies {
@@ -22,6 +33,12 @@ dependencies {
 	implementation 'mysql:mysql-connector-java'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+}
+
+bootRun {
+	// Use Spring Boot DevTool only when we run Gradle bootRun task
+	classpath = sourceSets.main.runtimeClasspath + configurations.developmentOnly
 }
 
 test {

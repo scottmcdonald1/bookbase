@@ -10,15 +10,18 @@ Bookbase is a personal library management application. Through the use of "shelv
 5) Memorable quotes and ideas can also be added to each book.
 
 ### Technologies 💻
-- Java 16
+- Java
+- JavaScript
 - Thymeleaf (Front-end Java framework) 
 - MySQL (Database for holding user and book data)
-- Hibernate
+- Hibernate (Framework for mapping an object-oriented model to a relational database)
 - Spring Framework (Gradle)
 - Google Books API (Used to add new books to users' libraries)
 - NYT API (For populating dynamic book carousel of current best-sellers)
 - HTML/CSS (Building and styling pages)
 - Bootstrap (UI/UX)
+- Heroku (Cloud Application Platform for deployment)
+- Amazon Web Services (Persistent cloud database)
 
 ### What We'll Have to Learn 💡
 1) How to integrate Google Books API

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns:th='http://www.thymeleaf.org/'>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<!-- searchForm -->
+<div th:fragment="search-form" id="search-form-container">
+    <form method="post" id="search-form" name="search-form" th:action="@{/user/search/}" class="row gy-2 gx-3">
+
+        <div class="col-auto">
+            <div class="input-group">
+                <label class="input-group-text" for="searchQuery">Search</label>
+                <input type="text" name="searchQuery" id="searchQuery" class="form-control shadow-sm" th:value="${searchQuery}" placeholder="Title / Author / ISBN"/>
+            </div>
+            <img
+                src="https://books.google.com/googlebooks/images/poweredby.png"
+                width="62" height="30" align="absbottom"
+                style="position: relative; top: 6px; margin:0; border: 0; padding: 0; padding-left: 8px"
+            >
+        </div>
+
+        <div class="col-auto">
+            <div class="input-group">
+                <label class="input-group-text" for="searchParameter">Filter</label>
+                <select name="searchParameter" id="searchParameter" class="form-select">
+                    <option th:selected="${searchParameter == null}" value="all">all</option>
+                    <option th:selected="${searchParameter == 'intitle'}" value="intitle">title</option>
+                    <option th:selected="${searchParameter == 'inauthor'}" value="inauthor">author</option>
+                    <option th:selected="${searchParameter == 'subject'}" value="subject">genre</option>
+                    <option th:selected="${searchParameter == 'isbn'}" value="isbn">isbn</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-auto form-check-inline">
+
+            <div class="input-group">
+                <div class="input-group-text">Results per page: </div>
+
+                <input class="btn-check" type="radio" name="resultsPerPage" id="10" value="10" th:checked="${maxResults == 10 || maxResults == null}">
+                <label class="btn btn-secondary" for="10">10</label>
+
+
+                <input class="btn-check" type="radio" name="resultsPerPage" id="25" value="25" th:checked="${maxResults == 25}">
+                <label class="btn btn-secondary" for="25">25</label>
+
+                <input class="btn-check" type="radio" name="resultsPerPage" id="40" value="40" th:checked="${maxResults == 40}">
+                <label class="btn btn-secondary" for="40">40</label>
+            </div>
+
+        </div>
+
+        <div class="col-auto">
+            <input type="submit" value="search" class="btn btn-primary btn-lg card-shadow">
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

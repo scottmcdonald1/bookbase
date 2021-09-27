@@ -5,9 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
     public class User implements UserDetails {
@@ -33,6 +31,8 @@ import java.util.Objects;
         private UserRoles role;
         private boolean active = false;  // not active until email confirmed
         private boolean locked = false;
+        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<Book> books = new ArrayList<>();
 
         // User Constructors
 
@@ -111,6 +111,8 @@ import java.util.Objects;
     public void setActive(boolean active) { this.active = active; }
     public boolean isLocked() { return locked; }
     public void setLocked(boolean locked) { this.locked = locked; }
+    public List<Book> getBooks() { return books; }
+    public void setBooks(List<Book> books) { this.books = books; }
 
     // User Methods
 

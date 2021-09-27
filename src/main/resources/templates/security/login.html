@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments :: head"></th:block>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+<body class="main-bg">
+
+<nav th:replace="fragments :: navigation-guest"></nav>
+
+<div class="container d-flex align-items-center justify-content-center" style="height:100vh;">
+    <div class="col" style="max-width:620px;">
+        <div class="card bg-light text-dark">
+            <div class="card-body">
+                <p class="lead fw-normal py-3 ps-4"><span class="fw-bold">Log in</span> to continue to your
+                    library:</p>
+                <th:block th:replace="fragments :: login-form"></th:block>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments :: footer-guest"></footer>
+
+</body>
+</html>

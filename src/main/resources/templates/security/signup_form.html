@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <th:block th:replace="fragments :: head"></th:block>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+<body class="main-bg">
+
+<nav th:replace="fragments :: navigation-guest"></nav>
+
+<div class="container d-flex align-items-center justify-content-center" style="height:100vh;">
+    <div class="col" style="max-width:620px;">
+        <div class="card bg-light text-dark">
+            <div class="card-body">
+                <p class="lead fw-normal pt-3 text-start ps-4"><span class="fw-bold">Sign up</span> to manage your
+                    own library:</p>
+                <form th:action="@{/registration}" th:object="${request}" method="post" class="px-4">
+                    <div th:if="${userTakenError}" class="alert alert-danger p-2 mb-4 mx-4 fw-bold text-center">
+                        <i class="bi bi-exclamation-circle-fill fs-4 pe-2" style="vertical-align: sub;"></i><span
+                            th:text="${userTakenError}"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="firstName" th:field="*{firstName}" class="form-control" required
+                               minlength="2" maxlength="20" placeholder="First Name"
+                               th:autofocus="${userTakenError == null}"/>
+                        <label for="firstName">First Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="lastName" th:field="*{lastName}" class="form-control" required
+                        minlength="2" maxlength="20" placeholder="Last Name"/>
+                        <label for="lastName">Last Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" id="email" th:field="*{email}" class="form-control" required
+                               placeholder="Email Address" th:autofocus="${userTakenError}"/>
+                        <label for="email">Email Address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" id="password" th:field="*{password}" class="form-control" required
+                               minlength="6" maxlength="20" placeholder="Password"/>
+                        <label for="password">Password</label>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary w-25 my-3 float-end">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments :: footer-guest"></footer>
+
+</body>
+</html>
