@@ -15,8 +15,9 @@
    <div style="padding-top: 65px;">
       <div class="container py-5 my-auto">
          <div class="px-xs-3 px-sm-4 py-5 bg-light rounded-3 shadow text-center">
-            <div class="container-fluid py-4 row ">
-               <div class="col ps-5 ps-lg-3 my-lg-5 mx-md-3 text-dark" align="left" style="min-width:20rem;">
+            <div class="container-fluid py-4 row justify-content-between">
+               <div class="col-xs-12 col-lg-5 ps-3 my-lg-5 text-dark" align="left"
+                    style="min-width:20rem;">
                   <h1 class="display-5 fw-bold">Hi! 👋</h1>
                   <p class="fs-4 text-secondary">You can either add a book on your own or search for one below.</p>
                   <p><strong class="fs-4"> Let's get to it!</strong></p>
@@ -34,8 +35,8 @@
                      </form>
                   </div>
                </div>
-               <div class="col">
-                  <div class="card mx-auto bg-light shadow" style="min-width: 26rem; max-width: 30rem;">
+               <div class="col-xs-12 col-lg-6">
+                  <div class="card mx-auto bg-light shadow" id="manual-add-card">
                      <div class="card-body">
                         <form method="post" class="row align-items-center gy-2 gx-3">
                            <div class="col-auto mt-3" style="width: 100%;">
@@ -52,21 +53,21 @@
                                  <input th:field="${book.author}" type="text" class="form-control" id="author" placeholder="Frank Herbert" required>
                               </div>
                            </div>
-                           <div class="col-auto" style="width: 60%;">
+                           <div class="col-auto" id="isbn-col">
                               <label class="visually-hidden" th:for="isbn">ISBN</label>
                               <div class="input-group">
                                  <div class="input-group-text">ISBN</div>
-                                 <input th:field="${book.isbn}" type="text" class="form-control" id="isbn" placeholder="978-0441013593" required>
+                                 <input th:field="${book.isbn}" type="text" class="form-control" id="isbn" placeholder="0441013597" required>
                               </div>
                            </div>
-                           <div class="col-auto" style="width: 40%;">
+                           <div class="col-auto" id="pages-col">
                               <label class="visually-hidden" th:for="pages">Pages</label>
                               <div class="input-group">
                                  <div class="input-group-text">Pages</div>
                                  <input th:field="${book.pages}" type="text" class="form-control" id="pages" placeholder="896" required>
                               </div>
                            </div>
-                           <div class="col-auto">
+                           <div class="col-auto" id="genre-col">
                               <label class="visually-hidden" th:for="genre">Genre</label>
                               <select th:field="*{book.genre}" class="form-select" id="genre" required>
                                  <option selected value="">Genre</option>
@@ -87,7 +88,7 @@
                                  <option value="Technology">Technology</option>
                               </select>
                            </div>
-                           <div class="col-auto" style="width: 60%;">
+                           <div class="col-auto" id="shelf-col">
                               <label class="visually-hidden" th:for="status">Status</label>
                               <select th:field="${book.status}" class="form-select status-selector" id="status" required>
                                  <option selected value="">Shelf</option>
@@ -108,16 +109,14 @@
                                  <textarea th:field="${book.userReview}" type="text" class="form-control textarea" rows="7" id="userReview" placeholder="Far-reaching and mind-expanding, I could only read half a page or so at a time before looking off into space in awe."></textarea>
                               </div>
                            </div>
-<!--                           <div>-->
-                              <div class="rating mt-2" id="starRating">
-                                 <input th:field="${book.rating}" type="radio" name="rating" value="5" id="5">
-                                 <label th:for="5">☆</label> <input type="radio" name="rating" value="4" id="4">
-                                 <label th:for="4">☆</label> <input type="radio" name="rating" value="3" id="3">
-                                 <label th:for="3">☆</label> <input type="radio" name="rating" value="2" id="2">
-                                 <label th:for="2">☆</label> <input type="radio" name="rating" value="1" id="1">
-                                 <label th:for="1">☆</label> <input type="radio" name="rating" value="" checked="checked">
-                              </div>
-<!--                           </div>-->
+                           <div class="rating mt-2" id="starRating">
+                              <input th:field="${book.rating}" type="radio" name="rating" value="5" id="5">
+                              <label th:for="5">☆</label> <input type="radio" name="rating" value="4" id="4">
+                              <label th:for="4">☆</label> <input type="radio" name="rating" value="3" id="3">
+                              <label th:for="3">☆</label> <input type="radio" name="rating" value="2" id="2">
+                              <label th:for="2">☆</label> <input type="radio" name="rating" value="1" id="1">
+                              <label th:for="1">☆</label> <input type="radio" name="rating" value="" checked="checked">
+                           </div>
                            <div class="col-auto py-3 mx-auto" id="addBookButton">
                               <button type="submit" class="btn btn-primary shadow">Add Book</button>
                            </div>

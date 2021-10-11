@@ -201,3 +201,37 @@ textarea {
 .nav-item {
     border-radius: 5px;
 }
+
+#manual-add-card {
+    min-width: 19rem;
+}
+
+@media (max-width: 1199.98px) {
+    #pages-col, #isbn-col, #genre-col, #shelf-col {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    #genre-col, #shelf-col {
+        width: 100%;
+    }
+
+    #isbn-col {
+        width: 60%;
+    }
+
+    #pages-col {
+        width: 40%;
+    }
+}
+
+@media (min-width: 1400px) {
+    #genre-col {
+        width: 60%;
+    }
+
+    #shelf-col {
+        width: 40%;
+    }
+}

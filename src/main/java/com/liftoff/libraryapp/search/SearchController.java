@@ -7,6 +7,7 @@ import com.liftoff.libraryapp.repositories.BookRepository;
 import com.mysql.cj.jdbc.Blob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,6 +49,10 @@ public class SearchController {
     public String processSearchForm(Model model, String searchQuery, String searchParameter, String resultsPerPage) {
 
         String newQuery = "";
+        if (searchQuery.contains("/")) {
+            searchQuery = searchQuery.replaceAll("/", "");
+            searchQuery = searchQuery.replaceAll("  ", " ");
+        }
         String queryToPathVariable = searchQuery.toLowerCase().replace(' ', '+');
 
         if(searchParameter == null || searchParameter.equals("all")) {
@@ -108,6 +113,11 @@ public class SearchController {
 
     @GetMapping("search/results/view/{bookId}")
     public String displayViewBook(Model model, @PathVariable String bookId) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails)principal).getUsername();
+        User user = (User) myUserDetailsService.loadUserByUsername(username);
+
         model.addAttribute("bookId", bookId);
         model.addAttribute(new Book());
 
@@ -115,7 +125,13 @@ public class SearchController {
         List<String> bookRepositoryIsbns;
         List<Integer> bookRepositoryIds;
 
-        bookRepository.findAll().forEach(allBooksInRepo::add);
+//        bookRepository.findAll().forEach(allBooksInRepo::add);
+
+        bookRepository.findByUserIdAndStatus(user.getId(), "Currently Reading",
+                Sort.by("dateViewed").descending()).forEach(allBooksInRepo::add);
+        bookRepository.findByUserIdAndStatus(user.getId(), "Want to Read", Sort.by("title")).forEach(allBooksInRepo::add);
+        bookRepository.findByUserIdAndStatus(user.getId(), "Completed", Sort.by("title")).forEach(allBooksInRepo::add);
+
         bookRepositoryIsbns = allBooksInRepo.stream().map(Book::getIsbn).collect(Collectors.toList());
         bookRepositoryIds = allBooksInRepo.stream().map(Book::getId).collect(Collectors.toList());
 
