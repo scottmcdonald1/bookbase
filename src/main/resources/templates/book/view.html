@@ -5,7 +5,7 @@
    <link rel="stylesheet" th:href="@{/css/shelf.css}" />
    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
-   <body>
+   <body style="background: url(/images/background.svg); background-repeat: no-repeat; background-size: cover;">
 
       <!-- User Navbar -->
       <header>
@@ -32,20 +32,20 @@
                      <h4 th:text="${'by ' + book.author}"></h4>
                      <div class="col">
                         <ul class="list-unstyled mt-3">
-                           <li th:if="${book.description}!=null and ${book.description}!=''" class="d-flex"><i class="bi bi-blockquote-left me-2"></i><p th:text="${book.description}" class="text-secondary"></p></li>
+                           <li th:if="${book.description}!=null and ${book.description}!=''" class="d-flex"><i class="bi bi-blockquote-left me-2" style="color:#6C63FF"></i><p th:text="${book.description}" class="text-secondary"></p></li>
                            <li><strong th:text="${book.userReview}" class="text-dark fs-5"></strong></li>
                            <div class="row my-3 mx-auto">
                               <hr/>
                               <div class="col my-2">
                                  <ul>
-                                    <li th:unless="${book.genre}==null" class="d-flex"><i class="bi bi-stars me-2"></i><p th:text="${book.genre}" class="text-secondary"></p></li>
-                                    <li th:unless="${book.pages}==null" class="d-flex"><i class="bi bi-file-text-fill me-2"></i><p th:text="${book.pages + ' pages'}" class="text-secondary"></p></li>
+                                    <li th:unless="${book.genre}==null" class="d-flex"><i class="bi bi-stars me-2" style="color:#6C63FF"></i><p th:text="${book.genre}" class="text-secondary"></p></li>
+                                    <li th:unless="${book.pages}==null" class="d-flex"><i class="bi bi-file-text-fill me-2" style="color:#6C63FF"></i><p th:text="${book.pages + ' pages'}" class="text-secondary"></p></li>
                                  </ul>
                               </div>
                               <div class="col my-2">
                                  <ul class="list-unstyled">
-                                    <li th:unless="${book.isbn}==null" class="d-flex"><i class="bi bi-book me-2"></i><p th:text="${'ISBN: ' + book.isbn}" class="text-secondary"></p></li>
-                                    <li class="d-flex"><i class="bi bi-bookshelf me-2"></i><p th:text="${book.status}" class="text-secondary"></p></li>
+                                    <li th:unless="${book.isbn}==null" class="d-flex"><i class="bi bi-book me-2" style="color:#6C63FF"></i><p th:text="${'ISBN: ' + book.isbn}" class="text-secondary"></p></li>
+                                    <li class="d-flex"><i class="bi bi-bookshelf me-2" style="color:#6C63FF"></i><p th:text="${book.status}" class="text-secondary"></p></li>
                                     <li class="d-flex">
                                        <div th:if="${book.status} == 'Want to Read'" class="btn-group">
                                           <button type="button" class="btn btn-sm btn-secondary dropdown-toggle fs-6" data-bs-toggle="dropdown" aria-expanded="false">
